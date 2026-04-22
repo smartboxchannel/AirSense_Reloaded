@@ -1,0 +1,191 @@
+{
+    "EFEKTA": [
+        {
+            "description": "Air quality sensor (CO2, formaldehyde, temperature, humidity, pressure",
+            "modelNames": [
+                "DIYRuZ_AirSense_Reloaded"
+            ],
+            "exposes": [
+                "co2",
+				"formaldehyde",
+                "temperature",
+                "humidity",
+				"pressure",
+                "co2AccurateMeasurement",
+                "co2AutomaticCalibration",
+                "ledIndication",
+                "co2ModerateThreshold",
+                "co2HazardousThreshold",
+                "formaldehydeModerateThreshold",
+                "formaldehydeHazardousThreshold",
+                "temperatureOffset",
+                "humidityOffset",
+                "pressureOffset",
+                "formaldehydeOffset"
+            ],
+            "options": {
+                "customAttributes": {
+                    "co2AccurateMeasurement": {
+                        "type": "bool",
+                        "clusterId": 1037,
+                        "attributeId": 61713,
+                        "dataType": 16,
+                        "action": true
+                    },
+                    "co2AutomaticCalibration": {
+                        "type": "bool",
+                        "clusterId": 1037,
+                        "attributeId": 514,
+                        "dataType": 16,
+                        "action": true
+                    },
+					"ledIndication": {
+                        "type": "bool",
+                        "clusterId": 1037,
+                        "attributeId": 515,
+                        "dataType": 16,
+                        "action": true
+                    },
+                    "co2ModerateThreshold": {
+                        "type": "value",
+                        "clusterId": 1037,
+                        "attributeId": 516,
+                        "dataType": 33,
+                        "action": true
+                    },
+					"co2HazardousThreshold": {
+                        "type": "value",
+                        "clusterId": 1037,
+                        "attributeId": 517,
+                        "dataType": 33,
+                        "action": true
+                    },
+                    "formaldehydeModerateThreshold": {
+                        "type": "value",
+                        "clusterId": 1067,
+                        "attributeId": 516,
+                        "dataType": 33,
+                        "action": true
+                    },
+                    "formaldehydeHazardousThreshold": {
+                        "type": "value",
+                        "clusterId": 1067,
+                        "attributeId": 517,
+                        "dataType": 33,
+                        "action": true
+                    },
+					"temperatureOffset": {
+                        "type": "value",
+                        "clusterId": 1026,
+                        "attributeId": 528,
+                        "dataType": 41,
+                        "divider": 10,
+                        "action": true
+                    },
+                    "humidityOffset": {
+                        "type": "value",
+                        "clusterId": 1029,
+                        "attributeId": 528,
+                        "dataType": 41,
+                        "action": true
+                    },
+					"pressureOffset": {
+                        "type": "value",
+                        "clusterId": 1027,
+                        "attributeId": 528,
+                        "dataType": 43,
+                        "action": true
+                    },
+					"formaldehydeOffset": {
+                        "type": "value",
+                        "clusterId": 1067,
+                        "attributeId": 528,
+                        "dataType": 40,
+                        "action": true
+                    }
+                },
+                "co2AccurateMeasurement": {
+                    "type": "toggle"
+                },
+				"co2AutomaticCalibration": {
+                    "type": "toggle"
+                },
+				"ledIndication": {
+                    "type": "toggle"
+                },
+                "co2ModerateThreshold": {
+                    "type": "number",
+                    "min": 0,
+                    "max": 5000,
+                    "unit": "ppm"
+                },
+				"co2HazardousThreshold": {
+                    "type": "number",
+                    "min": 0,
+                    "max": 5000,
+                    "unit": "ppm"
+                },
+				"formaldehydeModerateThreshold": {
+                    "type": "number",
+                    "min": 0,
+                    "max": 5000,
+                    "unit": "ppb"
+                },
+				"formaldehydeHazardousThreshold": {
+                    "type": "number",
+                    "min": 0,
+                    "max": 5000,
+                    "unit": "ppm"
+                },
+                "temperatureOffset": {
+                    "min": -50,
+                    "max": 50,
+                    "step": 0.1,
+                    "unit": "°C"
+                },
+                "pressureOffset": {
+                    "min": -100,
+                    "max": 100,
+                    "unit": "hPa"
+                },
+				"humidityOffset": {
+                    "min": -50,
+                    "max": 50,
+                    "unit": "%"
+                },
+				"formaldehydeOffset": {
+                    "min": -100,
+                    "max": 100,
+                    "unit": "adc"
+                }
+            }
+        },
+        {
+            "modelNames": [
+                "DIYRuZ_AirSense_Reloaded"
+            ],
+            "properties": [
+                "co2",
+				"formaldehyde",
+                "temperature",
+                "humidity",
+				"pressure"
+            ],
+            "bindings": [
+                "co2",
+				"formaldehyde",
+                "temperature",
+                "humidity",
+				"pressure"
+            ],
+            "reportings": [
+                "co2",
+				"formaldehyde",
+                "temperature",
+                "humidity",
+				"pressure"
+            ],
+            "endpointId": 1
+        }
+    ]
+}
