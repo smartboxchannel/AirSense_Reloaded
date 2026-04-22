@@ -1,0 +1,424 @@
+{
+  "name": "DIYRuZ AirSense Reloaded",
+  "manufacturer": "EfektaLab",
+  "model": "DIYRuZ_AirSense_Reloaded",
+  "manufacturerIds": [
+    "EfektaLab"
+  ],
+  "modelIds": [
+    "DIYRuZ_AirSense_Reloaded"
+  ],
+  "catalogId": 0,
+  "init": [
+    {
+      "zcl": [
+        {
+          "endpoint": 1,
+          "cluster": "040D_CarbonDioxide",
+          "attribute": "F111_Custom",
+          "zclDataType": "BOOLEAN"
+        },
+        {
+          "endpoint": 1,
+          "cluster": "040D_CarbonDioxide",
+          "attribute": "0202_Custom",
+          "zclDataType": "BOOLEAN"
+        },
+        {
+          "endpoint": 1,
+          "cluster": "040D_CarbonDioxide",
+          "attribute": "0203_Custom",
+          "zclDataType": "BOOLEAN"
+        },
+        {
+          "endpoint": 1,
+          "cluster": "040D_CarbonDioxide",
+          "attribute": "0204_Custom",
+          "zclDataType": "UNSIGNED_16_BIT_INTEGER"
+        },
+        {
+          "endpoint": 1,
+          "cluster": "040D_CarbonDioxide",
+          "attribute": "0205_Custom",
+          "zclDataType": "UNSIGNED_16_BIT_INTEGER"
+        },
+        {
+          "endpoint": 1,
+          "cluster": "042B_Formaldehyde",
+          "attribute": "0204_Custom",
+          "zclDataType": "UNSIGNED_16_BIT_INTEGER"
+        },
+        {
+          "endpoint": 1,
+          "cluster": "042B_Formaldehyde",
+          "attribute": "0205_Custom",
+          "zclDataType": "UNSIGNED_16_BIT_INTEGER"
+        },
+        {
+          "endpoint": 1,
+          "cluster": "0402_TemperatureMeasurement",
+          "attribute": "0210_Custom",
+          "zclDataType": "SIGNED_16_BIT_INTEGER"
+        },
+        {
+          "endpoint": 1,
+          "cluster": "0405_RelativeHumidityMeasurement",
+          "attribute": "0210_Custom",
+          "zclDataType": "SIGNED_16_BIT_INTEGER"
+        },
+        {
+          "endpoint": 1,
+          "cluster": "0403_PressureMeasurement",
+          "attribute": "0210_Custom",
+          "zclDataType": "SIGNED_32_BIT_INTEGER"
+        },
+        {
+          "endpoint": 1,
+          "cluster": "042B_Formaldehyde",
+          "attribute": "0210_Custom",
+          "zclDataType": "SIGNED_16_BIT_INTEGER"
+        }
+      ]
+    },
+    {
+      "link": [
+        {
+          "endpoint": 1,
+          "cluster": "040D_CarbonDioxide",
+          "attribute": "0000_MeasuredValue"
+        }
+      ],
+      "bind": true,
+      "report": {
+        "min": 10,
+        "max": 600,
+        "change": 0.000001
+      }
+    },
+    {
+      "link": [
+        {
+          "endpoint": 1,
+          "cluster": "042B_Formaldehyde",
+          "attribute": "0000_MeasuredValue"
+        }
+      ],
+      "bind": true,
+      "report": {
+        "min": 10,
+        "max": 600,
+        "change": 1
+      }
+    },
+    {
+      "link": [
+        {
+          "endpoint": 1,
+          "cluster": "0402_TemperatureMeasurement",
+          "attribute": "0000_MeasuredValue"
+        }
+      ],
+      "bind": true,
+      "report": {
+        "min": 20,
+        "max": 600,
+        "change": 10
+      }
+    },
+    {
+      "link": [
+        {
+          "endpoint": 1,
+          "cluster": "0405_RelativeHumidityMeasurement",
+          "attribute": "0000_MeasuredValue"
+        }
+      ],
+      "bind": true,
+      "report": {
+        "min": 20,
+        "max": 600,
+        "change": 25
+      }
+    },
+    {
+      "link": [
+        {
+          "endpoint": 1,
+          "cluster": "0403_PressureMeasurement",
+          "attribute": "0000_MeasuredValue"
+        }
+      ],
+      "bind": true,
+      "report": {
+        "min": 20,
+        "max": 600,
+        "change": 1
+      }
+    }
+  ],
+  "services": [
+    {
+      "type": "CarbonDioxideSensor",
+      "logics": [
+        {
+          "type": "CarbonDioxideDetectedFromCarbonDioxideLevel"
+        }
+      ],
+      "characteristics": [
+        {
+          "type": "CarbonDioxideLevel",
+          "link": [
+            {
+              "endpoint": 1,
+              "cluster": "040D_CarbonDioxide",
+              "attribute": "0000_MeasuredValue"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AirQualitySensor",
+      "logics": [
+        {
+          "type": "AirQualityFromFormaldehydeDensity"
+        }
+      ],
+      "characteristics": [
+        {
+          "type": "C_FormaldehydeDensity",
+          "link": [
+            {
+              "type": "Double",
+              "endpoint": 1,
+              "cluster": "042B_Formaldehyde",
+              "attribute": "0000_MeasuredValue"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "TemperatureSensor",
+      "characteristics": [
+        {
+          "type": "CurrentTemperature",
+          "link": [
+            {
+              "endpoint": 1,
+              "cluster": "0402_TemperatureMeasurement",
+              "attribute": "0000_MeasuredValue"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "HumiditySensor",
+      "characteristics": [
+        {
+          "type": "CurrentRelativeHumidity",
+          "link": [
+            {
+              "endpoint": 1,
+              "cluster": "0405_RelativeHumidityMeasurement",
+              "attribute": "0000_MeasuredValue"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "C_AtmosphericPressureSensor",
+      "characteristics": [
+        {
+          "type": "C_CurrentAtmosphericPressure",
+          "link": [
+            {
+              "endpoint": 1,
+              "cluster": "0403_PressureMeasurement",
+              "attribute": "0000_MeasuredValue"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "options": [
+    {
+      "link": [
+        {
+          "endpoint": 1,
+          "cluster": "0003_Identify",
+          "attribute": "0000_IdentifyTime"
+        }
+      ],
+      "name": "Идентификация устройства",
+      "description": "На датчике начнет плавно мигать светодиод синим цветом",
+      "type": "Integer",
+      "unit": "сек.",
+      "value": 5,
+      "inputType": "BUTTON"
+    },
+    {
+      "link": [
+        {
+          "endpoint": 1,
+          "cluster": "040D_CarbonDioxide",
+          "attribute": "F111_Custom"
+        }
+      ],
+      "name": "Компенсания давления",
+      "description": "Компенсания влияния атмосферного давления на СO2 измерения",
+      "type": "Boolean",
+      "value": false
+    },
+    {
+      "link": [
+        {
+          "endpoint": 1,
+          "cluster": "040D_CarbonDioxide",
+          "attribute": "0202_Custom"
+        }
+      ],
+      "name": "Автоматическуая калибровка",
+      "description": "Постоянная автоматическая калибровка сенсора СO2",
+      "type": "Boolean",
+      "value": false
+    },
+    {
+      "link": [
+        {
+          "endpoint": 1,
+          "cluster": "040D_CarbonDioxide",
+          "attribute": "0203_Custom"
+        }
+      ],
+      "name": "LED индикация датчика",
+      "description": "Включение или отключение LED индикации уровней O2 датчиком",
+      "type": "Boolean",
+      "value": false
+    },
+    {
+      "link": [
+        {
+          "endpoint": 1,
+          "cluster": "040D_CarbonDioxide",
+          "attribute": "0204_Custom"
+        }
+      ],
+      "name": "Порог умененного СO2",
+      "description": "Порог инрдикации для умеренного уровня CO2",
+      "type": "Integer",
+      "value": 0,
+      "minValue": 0,
+      "maxValue": 5000
+    },
+    {
+      "link": [
+        {
+          "endpoint": 1,
+          "cluster": "040D_CarbonDioxide",
+          "attribute": "0205_Custom"
+        }
+      ],
+      "name": "Порог опасного СO2",
+      "description": "Порог инрдикации для опасного уровня CO2",
+      "type": "Integer",
+      "value": 0,
+      "minValue": 0,
+      "maxValue": 5000
+    },
+    {
+      "link": [
+        {
+          "endpoint": 1,
+          "cluster": "042B_Formaldehyde",
+          "attribute": "0204_Custom"
+        }
+      ],
+      "name": "Порог умененного CH2O",
+      "description": "Порог инрдикации для умененного уровня формальдегида",
+      "type": "Integer",
+      "value": 0,
+      "minValue": 0,
+      "maxValue": 5000
+    },
+    {
+      "link": [
+        {
+          "endpoint": 1,
+          "cluster": "042B_Formaldehyde",
+          "attribute": "0205_Custom"
+        }
+      ],
+      "name": "Порог опасного CH2O",
+      "description": "Порог инрдикации для опасного уровня формальдегида",
+      "type": "Integer",
+      "value": 0,
+      "minValue": 0,
+      "maxValue": 5000
+    },
+    {
+      "link": [
+        {
+          "endpoint": 1,
+          "cluster": "0402_TemperatureMeasurement",
+          "attribute": "0210_Custom"
+        }
+      ],
+      "name": "Корректировка температуры",
+      "description": "Единица равна корректировке в 0.1°C.",
+      "unit": "°C",
+      "type": "Integer",
+      "value": 0,
+      "minValue": -50,
+      "maxValue": 50
+    },
+    {
+      "link": [
+        {
+          "endpoint": 1,
+          "cluster": "0405_RelativeHumidityMeasurement",
+          "attribute": "0210_Custom"
+        }
+      ],
+      "name": "Корректировка влажности",
+      "unit": "%",
+      "type": "Integer",
+      "value": 0,
+      "minValue": -50,
+      "maxValue": 50
+    },
+    {
+      "link": [
+        {
+          "endpoint": 1,
+          "cluster": "0403_PressureMeasurement",
+          "attribute": "0210_Custom"
+        }
+      ],
+      "name": "Корректировка давления",
+      "unit": "hPa",
+      "type": "Integer",
+      "value": 0,
+      "minValue": -500,
+      "maxValue": 500
+    },
+    {
+      "link": [
+        {
+          "endpoint": 1,
+          "cluster": "042B_Formaldehyde",
+          "attribute": "0210_Custom"
+        }
+      ],
+      "name": "Корректировка формальдегида",
+      "unit": "adc",
+      "type": "Integer",
+      "value": 0,
+      "minValue": -100,
+      "maxValue": 100
+    }
+  ]
+}
