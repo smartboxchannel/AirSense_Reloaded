@@ -69,6 +69,7 @@ class PressMeasurement(PressureMeasurement, CustomCluster):
     .replaces(CH2OMeasurement, endpoint_id=1)
     .replaces(TempMeasurement, endpoint_id=1)
     .replaces(RHMeasurement, endpoint_id=1)
+    .replaces(PressMeasurement, endpoint_id=1)
     .switch(
         CO2Measurement.AttributeDefs.co2_accurate_measurement.name,
         CO2Measurement.cluster_id,
