@@ -310,6 +310,7 @@
       "name": "Порог умененного СO2",
       "description": "Порог инрдикации для умеренного уровня CO2",
       "type": "Integer",
+      "unit": "ppm",
       "value": 0,
       "minValue": 0,
       "maxValue": 5000
@@ -325,6 +326,7 @@
       "name": "Порог опасного СO2",
       "description": "Порог инрдикации для опасного уровня CO2",
       "type": "Integer",
+      "unit": "ppm",
       "value": 0,
       "minValue": 0,
       "maxValue": 5000
@@ -340,6 +342,7 @@
       "name": "Порог умененного CH2O",
       "description": "Порог индикации для умеренного уровня формальдегида",
       "type": "Integer",
+      "unit": "ppb",
       "value": 0,
       "minValue": 0,
       "maxValue": 5000
@@ -355,6 +358,7 @@
       "name": "Порог опасного CH2O",
       "description": "Порог индикации для опасного уровня формальдегида",
       "type": "Integer",
+      "unit": "ppb",
       "value": 0,
       "minValue": 0,
       "maxValue": 5000
