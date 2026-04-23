@@ -38,7 +38,7 @@ const definition = {
         // Formaldehyde (CH2O)
         numeric({
             name: "formaldehyde_concentration",
-            unit: "ppm",
+            unit: "ppb",
             cluster: "msFormaldehyde",
             attribute: "measuredValue",
             description: "Formaldehyde (CH2O) concentration",
