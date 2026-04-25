@@ -19,6 +19,7 @@
 #include "bdb_interface.h"
 #include "zcl_app.h"
 
+
 const pTaskEventHandlerFn tasksArr[] = {macEventLoop,
                                         nwk_event_loop,
                                         Hal_ProcessEvent,
@@ -31,7 +32,8 @@ const pTaskEventHandlerFn tasksArr[] = {macEventLoop,
                                         bdb_event_loop,
                                         zclApp_event_loop,
                                         zclCommissioning_event_loop,
-                                        zclFactoryResetter_loop};
+                                        zclFactoryResetter_loop
+                                          };
 
 const uint8 tasksCnt = sizeof(tasksArr) / sizeof(tasksArr[0]);
 uint16 *tasksEvents;

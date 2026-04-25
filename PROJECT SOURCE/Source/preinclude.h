@@ -1,87 +1,95 @@
-#define TC_LINKKEY_JOIN
-#define NV_INIT
-#define NV_RESTORE
+//==============================================================================
+// preinclude.h
+//==============================================================================
+// Project-wide pre-include configuration macros
+//==============================================================================
 
-#define TP2_LEGACY_ZC
-// patch sdk
-// #define ZDSECMGR_TC_ATTEMPT_DEFAULT_KEY TRUE
+#ifndef PREINCLUDE_H
+#define PREINCLUDE_H
 
-#define NWK_AUTO_POLL
-#define MULTICAST_ENABLED FALSE
+//==============================================================================
+// ZigBee Network Settings
+//==============================================================================
+#define TC_LINKKEY_JOIN            // Use Trust Center Link Key for joining
+#define NV_INIT                    // Initialize Non-Volatile memory
+#define NV_RESTORE                 // Restore state from Non-Volatile memory
 
-#define ZCL_READ
-#define ZCL_WRITE
-#define ZCL_BASIC
-#define ZCL_IDENTIFY
-#define ZCL_REPORTING_DEVICE
+#define SENSAIR                    // Sensair CO2 sensor support
 
+#define TP2_LEGACY_ZC              // TP2 Legacy Zigbee Coordinator compatibility mode
+
+#define NWK_AUTO_POLL              // Automatic network polling
+#define MULTICAST_ENABLED FALSE    // Multicast disabled
+
+//==============================================================================
+// ZCL (ZigBee Cluster Library)
+//==============================================================================
+#define ZCL_READ                   // Support attribute reading
+#define ZCL_WRITE                  // Support attribute writing
+#define ZCL_BASIC                  // Basic cluster
+#define ZCL_IDENTIFY               // Identify cluster
+#define ZCL_REPORTING_DEVICE       // Device supports attribute reporting
+
+
+//==============================================================================
+// GreenPower and BDB (Base Device Behavior)
+//==============================================================================
 #define DISABLE_GREENPOWER_BASIC_PROXY
 #define BDB_FINDING_BINDING_CAPABILITY_ENABLED 1
-#define BDB_REPORTING TRUE
+#define BDB_REPORTING                           TRUE
+#define BDB_MAX_CLUSTERENDPOINTS_REPORTING      10
 
+//==============================================================================
+// HAL (Hardware Abstraction Layer) Configuration
+//==============================================================================
+#define HAL_BUZZER FALSE            // Buzzer disabled
+#define HAL_KEY TRUE                // Key/button enabled
+#define ISR_KEYINTERRUPT            // Key interrupt handler
+#define MT_ZDO_MGMT                 // MT ZDO management commands
 
-#define HAL_BUZZER FALSE
-#define HAL_KEY TRUE
-#define ISR_KEYINTERRUPT
+#define HAL_ADC TRUE                // ADC enabled
+#define HAL_LCD FALSE               // LCD disabled
 
+//==============================================================================
+// Pin and Port Assignments
+//==============================================================================
+#define HAL_KEY_P2_INPUT_PINS BV(0) // Button on port P2.0
 
-#define HAL_LED TRUE
-#define HAL_ADC FALSE
-#define HAL_LCD FALSE
+#define FACTORY_RESET_BY_LONG_PRESS_PORT      0x04  // Port P2 for factory reset
+#define APP_COMMISSIONING_BY_LONG_PRESS       TRUE
+#define APP_COMMISSIONING_BY_LONG_PRESS_PORT  0x04  // Port P2 for commissioning mode
 
-#define BLINK_LEDS TRUE
+//==============================================================================
+// I2C (BME280 Sensor)
+//==============================================================================
+#define BME280_32BIT_ENABLE          // 32-bit mode for BME280
 
-// one of this boards
-// #define HAL_BOARD_TARGET
-// #define HAL_BOARD_CHDTECH_DEV
+#define OCM_CLK_PORT  1              // I2C SCL port
+#define OCM_CLK_PIN   6              // I2C SCL pin
 
-#if !defined(HAL_BOARD_TARGET) && !defined(HAL_BOARD_CHDTECH_DEV)
-#error "Board type must be defined"
-#endif
-
-#if defined(HAL_BOARD_TARGET)
-    #define HAL_KEY_P2_INPUT_PINS BV(0)
-    #define CO2_UART_PORT 0x00
-    #define HAL_UART_DMA 1
-    #define HAL_UART_ISR 0
-    #define INT_HEAP_LEN (2256 - 0xE)
-#elif defined(HAL_BOARD_CHDTECH_DEV)
-    #define HAL_UART_DMA 1
-    #define HAL_UART_ISR 2
-    #define CO2_UART_PORT  0x01
-    #define HAL_KEY_P0_INPUT_PINS BV(1)
-    #define DO_DEBUG_UART
-#endif
-
-#define FACTORY_RESET_HOLD_TIME_LONG 5000
-
-
-#ifdef DO_DEBUG_UART
-    #define HAL_UART TRUE
-    #define HAL_UART_DMA 1
-    #define INT_HEAP_LEN 2060
-#endif
-
-// #define INT_HEAP_LEN (2685 - 0x4B - 0xBB-0x50-0xae)
-// #define HAL_UART TRUE
-// #define HAL_UART_DMA 2
-#define HAL_UART TRUE
-
-#define BME280_32BIT_ENABLE
-//i2c bme280
-#define OCM_CLK_PORT 1
-#define OCM_CLK_PIN 6
-
-#define OCM_DATA_PORT 1
-#define OCM_DATA_PIN 7
-
-
-#define DS18B20_PORT 0
-#define TSENS_SBIT P0_0
-#define TSENS_BV BV(0)
-#define TSENS_DIR P0DIR
+#define OCM_DATA_PORT 1              // I2C SDA port
+#define OCM_DATA_PIN  7              // I2C SDA pin
 
 
 
+//==============================================================================
+// ADC
+//==============================================================================
+#define READ_ADC_PORT 0
+#define READ_ADC_PIN  0
 
+//==============================================================================
+// UART and Memory
+//==============================================================================
+#define HAL_UART        TRUE
+#define HAL_UART_ISR    TRUE
+#define HAL_UART_DMA    FALSE
+
+#define INT_HEAP_LEN    (2048)       // Heap size in bytes
+
+//==============================================================================
+// Board Configuration
+//==============================================================================
 #include "hal_board_cfg.h"
+
+#endif // PREINCLUDE_H

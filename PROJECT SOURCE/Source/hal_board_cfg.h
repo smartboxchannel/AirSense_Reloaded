@@ -50,17 +50,11 @@
  * ------------------------------------------------------------------------------------------------
  */
 
-#if defined (HAL_BOARD_CHDTECH_DEV)
-  #define HAL_NUM_LEDS            3
-#elif defined(HAL_BOARD_TARGET)
-  #define HAL_NUM_LEDS            1
-#else
-  #error Unknown Board Indentifier
-#endif
+
+#define HAL_NUM_LEDS            4
 
 #define HAL_LED_BLINK_DELAY()   st( { volatile uint32 i; for (i=0; i<0x5800; i++) { }; } )
 
-#if defined(HAL_BOARD_TARGET)
   #define LED1_BV           BV(1)
   #define LED1_SBIT         P0_1
   #define LED1_DDR          P0DIR
@@ -77,33 +71,11 @@
   #define LED3_POLARITY     ACTIVE_HIGH
 
 
-  #define LED4_BV           BV(4)
-  #define LED4_SBIT         P1_4
-  #define LED4_DDR          P1DIR
+  #define LED4_BV           BV(6)
+  #define LED4_SBIT         P0_6
+  #define LED4_DDR          P0DIR
   #define LED4_POLARITY     ACTIVE_HIGH
 
-#elif defined(HAL_BOARD_CHDTECH_DEV)
-  #define LED1_BV           BV(0)
-  #define LED1_SBIT         P1_0
-  #define LED1_DDR          P1DIR
-  #define LED1_POLARITY     ACTIVE_LOW
-
-  #define LED2_BV           BV(1)
-  #define LED2_SBIT         P1_1
-  #define LED2_DDR          P1DIR
-  #define LED2_POLARITY     ACTIVE_LOW
-
-  #define LED3_BV           BV(4)
-  #define LED3_SBIT         P1_4
-  #define LED3_DDR          P1DIR
-  #define LED3_POLARITY     ACTIVE_LOW
-
-
-  #define LED4_BV           BV(4)
-  #define LED4_SBIT         P1_4
-  #define LED4_DDR          P1DIR
-  #define LED4_POLARITY     ACTIVE_LOW
-#endif
 
 
 
@@ -116,8 +88,8 @@
 #define ACTIVE_HIGH       !!    /* double negation forces result to be '1' */
 
 /* S1 */
-#define PUSH1_BV          BV(1)
-#define PUSH1_SBIT        P0_1
+//#define PUSH1_BV          BV(1)
+//#define PUSH1_SBIT        P0_1
 
 
 
@@ -212,9 +184,14 @@ extern void MAC_RfFrontendSetup(void);
   /* Turn on cache prefetch mode */                              \
   PREFETCH_ENABLE();                                             \
                                                                  \
+  HAL_TURN_OFF_LED1();                                           \
   LED1_DDR |= LED1_BV;                                           \
+  HAL_TURN_OFF_LED2();                                           \
   LED2_DDR |= LED2_BV;                                           \
+  HAL_TURN_OFF_LED3();                                           \
   LED3_DDR |= LED3_BV;                                           \
+  HAL_TURN_OFF_LED4();                                           \
+  LED4_DDR |= LED4_BV;                                           \
 }
 
 #elif defined (HAL_PA_LNA)
@@ -244,9 +221,14 @@ extern void MAC_RfFrontendSetup(void);
                                                                  \
   /* setup RF frontend if necessary */                           \
   HAL_BOARD_RF_FRONTEND_SETUP();                                 \
+  HAL_TURN_OFF_LED1();                                           \
   LED1_DDR |= LED1_BV;                                           \
+  HAL_TURN_OFF_LED2();                                           \
   LED2_DDR |= LED2_BV;                                           \
+  HAL_TURN_OFF_LED3();                                           \
   LED3_DDR |= LED3_BV;                                           \
+  HAL_TURN_OFF_LED4();                                           \
+  LED4_DDR |= LED4_BV;                                           \
 }
 
 #elif defined (HAL_PA_LNA_CC2592) || defined (HAL_PA_LNA_SE2431L)
@@ -276,9 +258,14 @@ extern void MAC_RfFrontendSetup(void);
                                                                  \
   /* setup RF frontend if necessary */                           \
   HAL_BOARD_RF_FRONTEND_SETUP();                                 \
+  HAL_TURN_OFF_LED1();                                           \
   LED1_DDR |= LED1_BV;                                           \
+  HAL_TURN_OFF_LED2();                                           \
   LED2_DDR |= LED2_BV;                                           \
+  HAL_TURN_OFF_LED3();                                           \
   LED3_DDR |= LED3_BV;                                           \
+  HAL_TURN_OFF_LED4();                                           \
+  LED4_DDR |= LED4_BV;                                           \
 }
 #endif
 
@@ -315,51 +302,49 @@ extern void MAC_RfFrontendSetup(void);
 #define HAL_STATE_LED4()          (LED4_POLARITY (LED4_SBIT))
 
 /* ----------- XNV ---------- */
-#define XNV_SPI_BEGIN()             st(P1_3 = 0;)
-#define XNV_SPI_TX(x)               st(U1CSR &= ~0x02; U1DBUF = (x);)
-#define XNV_SPI_RX()                U1DBUF
-#define XNV_SPI_WAIT_RXRDY()        st(while (!(U1CSR & 0x02));)
-#define XNV_SPI_END()               st(P1_3 = 1;)
+#define XNV_SPI_BEGIN()             st(P1_2 = 0;)  // CS on P1.2
+#define XNV_SPI_TX(x)               st(U0CSR &= ~0x02; U0DBUF = (x);)
+#define XNV_SPI_RX()                U0DBUF
+#define XNV_SPI_WAIT_RXRDY()        st(while (!(U0CSR & 0x02));)
+#define XNV_SPI_END()               st(P1_2 = 1;)
 
-// The TI reference design uses UART1 Alt. 2 in SPI mode.
+// USART0 in SPI mode (Alt. 2)
 #define XNV_SPI_INIT() \
 st( \
-  /* Mode select UART1 SPI Mode as master. */\
-  U1CSR = 0; \
+  /* Setup USART0 SPI Master */ \
+  U0CSR = 0; \
+  /* Set baud rate (115200 baud) */ \
+  U0GCR |= 11; \
+  U0BAUD = 216; \
   \
-  /* Setup for 115200 baud. */\
-  U1GCR = 11; \
-  U1BAUD = 216; \
+  /* MSB first */ \
+  U0GCR |= BV(5); \
   \
-  /* Set bit order to MSB */\
-  U1GCR |= BV(5); \
+  /* USART0 Alt.2 (P1.5 - MOSI, P1.4 - MISO, P1.3 - CLK) */ \
+  PERCFG |= 0x01; \
   \
-  /* Set UART1 I/O to alternate 2 location on P1 pins. */\
-  PERCFG |= 0x02;  /* U1CFG */\
+  /* Configure pins */ \
+  P1SEL |= 0x38;   /* P1.5 (MOSI), P1.4 (MISO), P1.3 (CLK) */ \
+  P1SEL &= ~0x04;  /* P1.2 (CS) as GPIO */ \
+  /* Pull-up CS */ \
+  P1 |= 0x04;      /* P1.2 (CS) high */ \
+  P1DIR |= 0x04;   /* P1.2 (CS) as output */ \
   \
-  /* Select peripheral function on I/O pins but SS is left as GPIO for separate control. */\
-  P1SEL |= 0xE0;  /* SELP1_[7:4] */\
-  /* P1.1,2,3: reset, LCD CS, XNV CS. */\
-  P1SEL &= ~0x0E; \
-  P1 |= 0x0E; \
-  P1_1 = 0; \
-  P1DIR |= 0x0E; \
+  /* USART0 priority */ \
+  P2SEL &= ~0x08; \
   \
-  /* Give UART1 priority over Timer3. */\
-  P2SEL &= ~0x20;  /* PRI2P1 */\
-  \
-  /* When SPI config is complete, enable it. */\
-  U1CSR |= 0x40; \
-  /* Release XNV reset. */\
-  P1_1 = 1; \
+  /* Enable SPI mode */ \
+  U0CSR |= 0x40; \
 )
+
 
 /* ----------- Minimum safe bus voltage ---------- */
 
 // Vdd/3 / Internal Reference X ENOB --> (Vdd / 3) / 1.15 X 127
 #define VDD_2_0  74   // 2.0 V required to safely read/write internal flash.
 #define VDD_2_7  100  // 2.7 V required for the Numonyx device.
-#define VDD_MIN_RUN  (VDD_2_0+4)  // VDD_MIN_RUN = VDD_MIN_NV
+
+#define VDD_MIN_RUN   VDD_2_0
 #define VDD_MIN_NV   (VDD_2_0+4)  // 5% margin over minimum to survive a page erase and compaction.
 #define VDD_MIN_GOOD (VDD_2_0+8)  // 10% margin over minimum to survive a page erase and compaction.
 #define VDD_MIN_XNV  (VDD_2_7+5)  // 5% margin over minimum to survive a page erase and compaction.
@@ -395,20 +380,24 @@ st( \
 #endif
 
 #ifndef HAL_AES_DMA
-#define HAL_AES_DMA TRUE
+#define HAL_AES_DMA FALSE
 #endif
 
 /* Set to TRUE enable LCD usage, FALSE disable it */
 #ifndef HAL_LCD
-#define HAL_LCD TRUE
+#define HAL_LCD FALSE
 #endif
 
 /* Set to TRUE enable LED usage, FALSE disable it */
 #ifndef HAL_LED
-#define HAL_LED TRUE
+#define HAL_LED FALSE
 #endif
 #if (!defined BLINK_LEDS) && (HAL_LED == TRUE)
 #define BLINK_LEDS
+#endif
+
+#ifndef HAL_MOTION
+#define HAL_MOTION FASLE
 #endif
 
 /* Set to TRUE enable KEY usage, FALSE disable it */
@@ -418,11 +407,7 @@ st( \
 
 /* Set to TRUE enable UART usage, FALSE disable it */
 #ifndef HAL_UART
-#if (defined ZAPP_P1) || (defined ZAPP_P2) || (defined ZTOOL_P1) || (defined ZTOOL_P2)
-#define HAL_UART TRUE
-#else
 #define HAL_UART FALSE
-#endif
 #endif
 
 #if HAL_UART
@@ -466,6 +451,11 @@ st( \
 
 /* USB is not used for CC2530 configuration */
 #define HAL_UART_USB  0
+
+#ifndef HAL_BUZZER
+#define HAL_BUZZER TRUE
 #endif
+
 /*******************************************************************************************************
 */
+#endif
