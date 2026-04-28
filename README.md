@@ -1,10 +1,6 @@
-# DIYRUZ AirSense Reloaded
+
 
 ![AirSense_Reloaded](https://raw.githubusercontent.com/smartboxchannel/AirSense_Reloaded/refs/heads/main/IMAGES/Bez-nazvania.jpg)
-
-
-
-
 
 # DIYRUZ AirSens Reloaded
 
