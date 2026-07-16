@@ -4,7 +4,7 @@
 
 # DIYRUZ AirSens Reloaded
 
-Zigbee 3.0 air quality monitoring sensor based on SenseAir S8 (CO2), BME280 (temperature, humidity, pressure) and optionally ZE08K-CH2O (formaldehyde).
+Zigbee 3.0 air quality monitoring sensor based on SenseAir S8 (CO2), BME280 (temperature, humidity, pressure), optionally ZE08K-CH2O (formaldehyde) and ENS160 (tVOC).
 
 Support the author: https://yoomoney.ru/fundraise/P2XLTgJsB6k.231012
 
