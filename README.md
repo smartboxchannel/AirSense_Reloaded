@@ -50,6 +50,7 @@ Backward compatibility with old hardware is preserved.
 | SenseAir S8 | CO2 (400-5000 ppm) | UART | [PSP107.pdf](DOC/PSP107.pdf) |
 | Bosch BME280 | Temperature, humidity, pressure | I2C | [bst-bme280-ds002.pdf](DOC/bst-bme280-ds002.pdf) |
 | Winsen ZE08K-CH2O | Formaldehyde (HCHO) | DAC | [ze08k-ch2o.pdf](DOC/ze08k-ch2o.pdf) |
+| ENS160 | tVOC | I2C |  |
 
 ---
 
@@ -86,6 +87,10 @@ Formaldehyde sensor module mounting — using M2 standoffs.
 |----------------------------------|
 | ![Installation](IMAGES/Bez-imeni-6.png) |
 | ![Installation](IMAGES/Bez-imeni-66.png) |
+
+| ENS160 tVOC |
+|----------------------------------|
+| ![Installation](IMAGES/ens160.png) |
 
 ---
 
